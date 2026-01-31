@@ -1,4 +1,10 @@
 #!/bin/bash
 
-ls $PWD/$@
+path=$@
+if [ -z "$path" ]
+then
+    path='*'
+fi
+
+eval gls -d --group-directories-first --color=always -p "$PWD/$path"
 

@@ -1,3 +1,4 @@
 #!/bin/bash
 
-git log --graph --decorate=full
+git log --graph --decorate=full $@
+
