@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker run --name myadmin -d --link local_db_1:db -p 8080:80 --network local_default phpmyadmin/phpmyadmin
+

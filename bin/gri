@@ -1,0 +1,19 @@
+#!/bin/bash
+
+branch=$@
+if [ -z ${branch} ]; then 
+    exists=`git show-ref refs/heads/master`
+    if [ -n "$exists" ]; then
+        branch='master'
+    fi
+  
+    exists=`git show-ref refs/heads/main`
+    if [ -n "$exists" ]; then
+        branch='main'
+    fi
+fi;
+
+echo "git rebase origin/${branch} --interactive"
+
+git rebase origin/"$branch" --interactive
+
