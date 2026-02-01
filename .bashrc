@@ -76,3 +76,38 @@ fi
 
 PS1="[\u@\h \W]\\$ "
 
+# Internal helper: determines the branch name
+__gri_pick_branch() {
+    local branch="$1"
+
+    if [ -z "$branch" ]; then
+        if git show-ref --verify --quiet refs/heads/master; then
+            branch="master"
+        fi
+
+        if git show-ref --verify --quiet refs/heads/main; then
+            branch="main"
+        fi
+    fi
+
+    printf "%s" "$branch"
+}
+
+# Rebase onto origin/<branch>
+grio() {
+    local branch
+    branch="$(__gri_pick_branch "$@")"
+
+    echo "git rebase origin/${branch} --interactive"
+    git rebase "origin/${branch}" --interactive
+}
+
+# Rebase onto <branch> (local)
+gri() {
+    local branch
+    branch="$(__gri_pick_branch "$@")"
+
+    echo "git rebase ${branch} --interactive"
+    git rebase "${branch}" --interactive
+}
+
